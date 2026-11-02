@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>물리공부방</title>
+<meta name="theme-color" content="#f5f4ef" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#15171b" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  :root { --bg: #f5f4ef; --ink: #1d2126; --sub: #5d646d; --accent: #2c66c9; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #15171b; --ink: #e7e9ec; --sub: #a3aab3; --accent: #79a6f2; }
+  }
+  :root[data-theme="dark"] { --bg: #15171b; --ink: #e7e9ec; --sub: #a3aab3; --accent: #79a6f2; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); overflow: hidden; }
+  body { font-family: -apple-system, "Noto Sans KR", "Malgun Gothic", sans-serif; }
+  iframe { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; }
+  /* 앱이 안 뜰 때(로그인 문제 등) 누르는 작은 버튼 */
+  #help { position: fixed; right: 12px; bottom: 12px; z-index: 2; display: none; padding: 10px 14px; border-radius: 999px;
+          background: var(--accent); color: #fff; text-decoration: none; font-size: 14px; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
+</style>
+</head>
+<body>
+<!-- 앱 내용은 Apps Script 웹앱에서 그대로 불러온다. 앱을 고치면 Apps Script에서 새 버전으로 배포만 하면 된다. -->
+<iframe id="app" src="https://script.google.com/macros/s/AKfycbzZuEFmPUtW8FXWszeKknR1l43KWDqCHa4v228imFWND6BjTbhnrLaRYNgxaFoHPhIp/exec"
+        allow="fullscreen; clipboard-write" title="물리공부방"></iframe>
+<a id="help" target="_blank" rel="noopener"
+   href="https://script.google.com/macros/s/AKfycbzZuEFmPUtW8FXWszeKknR1l43KWDqCHa4v228imFWND6BjTbhnrLaRYNgxaFoHPhIp/exec">안 열리면 여기 (크롬으로 열기)</a>
+<script>
+  // 10초 안에 앱이 안 뜨면 크롬으로 여는 버튼을 보여 준다
+  var loaded = false;
+  document.getElementById('app').addEventListener('load', function () { loaded = true; });
+  setTimeout(function () { if (!loaded) document.getElementById('help').style.display = 'block'; }, 10000);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+</script>
+</body>
+</html>
